@@ -1,35 +1,40 @@
-function [R, t, error, newA1] = ICP(source, target, point_sample_method)    
+function [R, t, error, transformed] = ICP(source, target, point_sample_method, sample_nr) 
+    A1 = source;
+    A2 = target;
     switch(point_sample_method)
-        case 'all'            
-            A1 = source;
-        case 'uniform'
-            A1 = uniformSampling();
+        case 'all'          
+            sampleA1 = A1;
+        case 'uniform'          
+            sampleA1 = datasample(A1, sample_nr, 2);
         case 'random' 
-            A1 = randomSampling();
+            sampleA1 = datasample(A1, sample_nr, 2);
         case 'informative'
-            A1 = informativeSampling();         
+            sampleA1 = informativeSampling(A1);         
         
     end
     
-    threshold = 1e-5;
-    A2 = target;
-    newA1 = A1;    
+    threshold = 1e-5;    
+        
     R = eye(size(A1,1));
     t = zeros(size(A1,1),1);       
     
     max_iter = 1000;
     iter = 1;
     
-    Y = getCorrespondences(newA1, A2);
-    rms_old = computeRMS(newA1, Y);
+    Y = getCorrespondences(sampleA1, A2);
+    rms_old = computeRMS(sampleA1, Y);
     
-    while iter < max_iter       
-        Y = getCorrespondences(newA1, A2);
-        [R, t] = getAllignment(newA1, Y);
-        for i = 1:size(newA1,2)
-            newA1(:,i) = R*newA1(:,i) + t;            
+    while iter < max_iter  
+        if strcmp(point_sample_method, 'random')
+            sampleA1 = datasample(A1, sample_nr, 2);           
         end
-        rms_new = computeRMS(newA1, Y);
+        Y = getCorrespondences(sampleA1, A2);
+        [R, t] = getAllignment(sampleA1, Y);
+        
+        sampleA1 = R*sampleA1 + t;
+        A1 = R*A1 + t;
+       
+        rms_new = computeRMS(sampleA1, Y);
         error(iter) = rms_new;
         iter = iter+1;
         if abs(rms_old - rms_new) < threshold
@@ -37,7 +42,9 @@ function [R, t, error, newA1] = ICP(source, target, point_sample_method)
         end
         rms_old = rms_new;       
         
-    end    
+    end   
+    
+    transformed = A1;
     
     
 end
