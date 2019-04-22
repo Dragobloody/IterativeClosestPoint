@@ -1,6 +1,7 @@
 function merged = merge(base,target, R, t)
 %   Merge two frames given camera pose
-%   Detailed explanation goes here
+%   for every point in (R*base+t) finds closest point form target
+%   and averages them into a combined frame_{base&target}, see 3.1.b
 merged = [] ;
 
 for col_b = 1:size(base,2)
