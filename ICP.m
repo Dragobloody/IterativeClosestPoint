@@ -1,5 +1,4 @@
-function [R, t, error, newA1] = ICP(source, target, point_sample_method)
-    
+function [R, t, error, newA1] = ICP(source, target, point_sample_method)    
     switch(point_sample_method)
         case 'all'            
             A1 = source;
@@ -8,9 +7,10 @@ function [R, t, error, newA1] = ICP(source, target, point_sample_method)
         case 'random' 
             A1 = randomSampling();
         case 'informative'
-            A1 = informativeSampling();           
+            A1 = informativeSampling();         
         
     end
+    
     threshold = 1e-5;
     A2 = target;
     newA1 = A1;    
