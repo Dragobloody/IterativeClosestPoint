@@ -1,4 +1,13 @@
 function [R,t] = getAllignment(A1,A2)
+% Function for computing the rotation matrix R and translation vector t from poinclouds A1 and A2.
+% 
+% Input
+%     A1: first pointcloud
+%     A2: list of clossest points to A1
+% Output
+%     R: rotation matrix
+%     t: translation vector
+
     R = eye(size(A1,1));
     t = zeros(size(A1,1),1);   
     ndim = size(A1,1);

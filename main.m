@@ -17,3 +17,5 @@ scatter3(pointcloud(1,:),pointcloud(2,:),pointcloud(3,:),10,rgb');
 %%
 fscatter3(pointcloud(1,:),pointcloud(2,:),pointcloud(3,:),pointcloud(3,:));
 
+
+

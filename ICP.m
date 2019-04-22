@@ -1,4 +1,18 @@
-function [R, t, error, transformed] = ICP(source, target, point_sample_method, sample_nr) 
+function [R, t, error, transformed] = ICP(source, target, point_sample_method, sample_nr)
+% Function which runs the ICP algorithm.
+%
+%   Input
+%     source: first poincloud
+%     target: second pointcloud
+%     point_sample_method: all, uniform, random or informative
+%     sample_nr: nr of sample points for uniform and random sampling
+%   Output
+%     R: rotation matrix
+%     t: translation vector
+%     error: vector of RMS convergence
+%     transformed: rotated and translated source
+
+
     A1 = source;
     A2 = target;
     switch(point_sample_method)
