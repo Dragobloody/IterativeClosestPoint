@@ -1,5 +1,11 @@
 
-test = readPcd('Data/data/0000000000.pcd');
+A1 = readPcd('Data/data/0000000000.pcd');
+A1_normals = readPcd('Data/data/0000000000_normal.pcd');
+
+[A1,A1_normals] = preprocessNormals(A1, A1_normals);
+
+%[A1, ~] = preprocessPointCloud(A1,1);
+%[A1_normals, A1_normals_rgb] = preprocessPointCloud(A1_normals,1);
 
 
 %%

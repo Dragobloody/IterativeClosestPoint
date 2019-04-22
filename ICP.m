@@ -60,9 +60,7 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
             break;
         end
 
-        rms_old = rms_new; 
-
-        
+        rms_old = rms_new;         
 
     end   
     
