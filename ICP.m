@@ -11,6 +11,7 @@ function [R, t, error, newA1] = ICP(source, target, point_sample_method)
             A1 = informativeSampling();           
         
     end
+    threshold = 1e-5;
     A2 = target;
     newA1 = A1;    
     R = eye(size(A1,1));
@@ -31,7 +32,7 @@ function [R, t, error, newA1] = ICP(source, target, point_sample_method)
         rms_new = computeRMS(newA1, Y);
         error(iter) = rms_new;
         iter = iter+1;
-        if rms_old == rms_new || iter > max_iter
+        if abs(rms_old - rms_new) < threshold
             break;
         end
         rms_old = rms_new;       
