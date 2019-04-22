@@ -4,7 +4,7 @@ rgb = unpackRGBFloat(single(test(:,4)));
 
 %%
 
-fscatter3(new_test(:,1),new_test(:,2),new_test(:,3),new_test(:,3));
+fscatter3(new_test(:,1),new_test(:,2),new_test(:,3),new_test(:,4),new_rgb);
 %%
 
 
