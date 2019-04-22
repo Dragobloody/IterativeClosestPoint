@@ -1,11 +1,12 @@
-function [R, t, error, transformed] = ICP(source, target, point_sample_method, sample_nr)
+function [R, t, error, transformed] = ICP(source, target, point_sample_method, sample_nr, uniform_step)
 % Function which runs the ICP algorithm.
 %
 %   Input
 %     source: first poincloud
 %     target: second pointcloud
 %     point_sample_method: all, uniform, random or informative
-%     sample_nr: nr of sample points for uniform and random sampling
+%     sample_nr: nr of sample points for random sampling
+%     uniform_step: step for uniform sampling
 %   Output
 %     R: rotation matrix
 %     t: translation vector
@@ -19,7 +20,7 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
         case 'all'          
             sampleA1 = A1;
         case 'uniform'          
-            sampleA1 = datasample(A1, sample_nr, 2);
+            sampleA1 = uniformSampling(A1, uniform_step);
         case 'random' 
             sampleA1 = datasample(A1, sample_nr, 2);
         case 'informative'

@@ -3,7 +3,7 @@ test = readPcd('Data/data/0000000000.pcd');
 
 
 %%
-[R, t, error, transformed] = ICP(source,target,'random',10);
+[R, t, error, transformed] = ICP(source,target,'uniform',10,200);
 %%
 
 fscatter3(source(1,:),source(2,:),source(3,:),source(3,:));
