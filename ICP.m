@@ -12,7 +12,7 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
 %     error: vector of RMS convergence
 %     transformed: rotated and translated source
 
-
+  
     A1 = source;
     A2 = target;
     switch(point_sample_method)
@@ -26,7 +26,7 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
             sampleA1 = informativeSampling(A1);         
         
     end
-    
+
     threshold = 1e-5;    
         
     R = eye(size(A1,1));
@@ -37,8 +37,9 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
     
     Y = getCorrespondences(sampleA1, A2);
     rms_old = computeRMS(sampleA1, Y);
-    
+
     while iter < max_iter  
+
         if strcmp(point_sample_method, 'random')
             sampleA1 = datasample(A1, sample_nr, 2);           
         end
@@ -49,13 +50,19 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
         A1 = R*A1 + t;
        
         rms_new = computeRMS(sampleA1, Y);
+
         error(iter) = rms_new;
         iter = iter+1;
+
         if abs(rms_old - rms_new) < threshold
+
             break;
         end
-        rms_old = rms_new;       
+
+        rms_old = rms_new; 
+
         
+
     end   
     
     transformed = A1;
