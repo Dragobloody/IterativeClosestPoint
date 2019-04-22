@@ -1,4 +1,12 @@
 function sampleA1 = informativeSampling(A1, A1_normals)
+% Function for Normal-Space Sampling.
+% 
+% Input
+%     A1: base pointcloud
+%     A1_normals: base pointcloud normals
+% Output
+%     sampleA1: normal-space sub-sample of A1
+
      sampleA1 = [];
      % get polaroid coordinates from cardinals
      [theta,~,~] = cart2pol(A1_normals(1,:),A1_normals(2,:),A1_normals(3,:));
