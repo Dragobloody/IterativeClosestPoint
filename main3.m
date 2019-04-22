@@ -18,7 +18,7 @@ for j = [2:step:99]
     merged = [merged transformed] ;
 end
 
-%% 3.1.b
+%% 3.1.b (not correct most probably)
 for j = [2:step:N]
     j
     target_file = strcat(path, num2str(j, '%010d'), '.pcd');
