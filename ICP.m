@@ -1,8 +1,10 @@
-function [R, t, error, transformed] = ICP(source, target, point_sample_method, sample_nr, uniform_step)
+function [R, t, error, transformed] = ICP(source, source_normals, target, point_sample_method, sample_nr, uniform_step)
 % Function which runs the ICP algorithm.
 %
 %   Input
 %     source: first poincloud
+%     source_normals: normal vectors on the surface of the first pointcloud
+%                     needed for informative sampling     
 %     target: second pointcloud
 %     point_sample_method: all, uniform, random or informative
 %     sample_nr: nr of sample points for random sampling
@@ -15,6 +17,7 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
 
   
     A1 = source;
+    A1_normals = source_normals;
     A2 = target;
     switch(point_sample_method)
         case 'all'          
@@ -24,7 +27,7 @@ function [R, t, error, transformed] = ICP(source, target, point_sample_method, s
         case 'random' 
             sampleA1 = datasample(A1, sample_nr, 2);
         case 'informative'
-            sampleA1 = informativeSampling(A1);         
+            sampleA1 = informativeSampling(A1, A1_normals);         
         
     end
 
