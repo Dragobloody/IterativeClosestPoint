@@ -1,4 +1,4 @@
-function [R, t, error, transformed] = ICP(source, source_normals, target, point_sample_method, sample_nr, uniform_step)
+function [R_final, t_final, error, transformed] = ICP(source, source_normals, target, point_sample_method, sample_nr, uniform_step)
 % Function which runs the ICP algorithm.
 %
 %   Input
@@ -33,8 +33,8 @@ function [R, t, error, transformed] = ICP(source, source_normals, target, point_
 
     threshold = 1e-5;    
         
-    R = eye(size(A1,1));
-    t = zeros(size(A1,1),1);       
+    R_final = eye(size(A1,1));
+    t_final = zeros(size(A1,1),1);       
     
     max_iter = 1000;
     iter = 1;
@@ -49,6 +49,9 @@ function [R, t, error, transformed] = ICP(source, source_normals, target, point_
         end
         Y = getCorrespondences(sampleA1, A2);
         [R, t] = getAllignment(sampleA1, Y);
+        
+        R_final = R*R_final; 
+        t_final = R*t_final + t;
         
         sampleA1 = R*sampleA1 + t;
         A1 = R*A1 + t;
