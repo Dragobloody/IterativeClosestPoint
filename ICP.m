@@ -70,5 +70,6 @@ function [R, t, error, transformed] = ICP(source, source_normals, target, point_
     transformed = A1;
     
     
+    
 end
 
