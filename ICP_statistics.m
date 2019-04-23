@@ -3,7 +3,7 @@ path = 'Data/data/00000000';
 for i=0:8
     path_pcd = strcat(path,'0',string(i),'.pcd');
     path_pcd_normal = strcat(path,'0',string(i),'_normal.pcd');
-    path_next_frame_pcd = strcat(path,'0',string(i+4),'.pcd');
+    path_next_frame_pcd = strcat(path,string(i+10),'.pcd');
     
     A1 = readPcd(path_pcd);
     A1_normals = readPcd(path_pcd_normal);

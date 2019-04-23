@@ -21,14 +21,32 @@ for i=0:8
     
 end
 %%
-transformed = R_uniform*source + t_uniform;
+transformed = R{3}*A1 + t{3};
 %%
-fscatter3(source(1,:),source(2,:),source(3,:),source(3,:));
+fscatter3(A1(1,:),A1(2,:),A1(3,:),A1(3,:));
 figure();
-fscatter3(target(1,:),target(2,:),target(3,:),target(3,:));
+fscatter3(A2(1,:),A2(2,:),A2(3,:),A2(3,:));
 figure();
 fscatter3(transformed(1,:),transformed(2,:),transformed(3,:),transformed(3,:));
 
 %%
-
 [R_uniform, t_uniform, error_uniform, transformed_uniform] = ICP(source, A1_normals, target,'uniform',50, 100);
+
+%%
+transformed1 = R{1}*A1 + t{1};
+transformed2 = R{2}*A1 + t{2};
+transformed3 = R{3}*A1 + t{3};
+
+%%
+ Y = getCorrespondences(transformed1, A2);
+ rms1 = computeRMS(transformed1, Y);
+%%
+ Y = getCorrespondences(transformed2, A2);
+ rms2 = computeRMS(transformed2, Y);
+    
+ %%
+  Y = getCorrespondences(transformed2, A2);
+  rms3 = computeRMS(transformed3, Y);
+
+
+
