@@ -5,7 +5,7 @@ function [time, errors, R, t] = getICPStatistics(A1, A1_normals, A2)
     t = {};
     
 %     tic
-%     [R_all, t_all, error_all, transformed_all] = ICP(A1, A1_normals, A2,'all',50, 300);
+%     [R_all, t_all, error_all, transformed_all] = ICP(A1, A1_normals, A2,'all',50, 100);
 %     time_all = toc;
 %     Y = getCorrespondences(transformed_all, A2);
 %     rms_all = computeRMS(transformed_all, Y);
@@ -17,7 +17,7 @@ function [time, errors, R, t] = getICPStatistics(A1, A1_normals, A2)
 %     t{1} = t_all;   
     
     tic
-    [R_uniform, t_uniform, error_uniform, transformed_uniform] = ICP(A1, A1_normals, A2,'uniform',50, 300);
+    [R_uniform, t_uniform, error_uniform, transformed_uniform] = ICP(A1, A1_normals, A2,'uniform',50, 100);
     time_uniform = toc;   
     
    
@@ -27,7 +27,7 @@ function [time, errors, R, t] = getICPStatistics(A1, A1_normals, A2)
     t{1} = t_uniform; 
     
     tic
-    [R_random, t_random, error_random, transformed_random] = ICP(A1, A1_normals, A2,'random',50, 300);
+    [R_random, t_random, error_random, transformed_random] = ICP(A1, A1_normals, A2,'random',50, 100);
     time_random = toc;
    
    
