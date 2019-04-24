@@ -19,7 +19,7 @@ function Y = getCorrespondences(A1,A2)
             dist(j) = sqrt(sum( ( A1(:,i) - A2(:,j) ).^2 ));           
         end
         
-        [~, k] = min(dist);
+        [~, k] = min(dist);        
         Y(:,i) = A2(:,k);       
         
     end

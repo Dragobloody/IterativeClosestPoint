@@ -48,6 +48,10 @@ function [R_final, t_final, error, transformed] = ICP(source, source_normals, ta
             sampleA1 = datasample(A1, sample_nr, 2);           
         end
         Y = getCorrespondences(sampleA1, A2);
+        aux = Y(:, sqrt(sum((Y-sampleA1).^2,1)) < 7e-2);
+        sampleA1 = sampleA1(:, sqrt(sum((Y-sampleA1).^2,1)) < 7e-2);
+        Y = aux;
+
         [R, t] = getAllignment(sampleA1, Y);
         
         R_final = R*R_final; 

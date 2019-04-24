@@ -4,13 +4,16 @@ for i=0:8
     path_pcd = strcat(path,'0',string(i),'.pcd');
     path_pcd_normal = strcat(path,'0',string(i),'_normal.pcd');
     path_next_frame_pcd = strcat(path,string(i+10),'.pcd');
+    path_next_frame_pcd_normal = strcat(path,string(i+10),'_normal.pcd');
     
     A1 = readPcd(path_pcd);
     A1_normals = readPcd(path_pcd_normal);
     A2 = readPcd(path_next_frame_pcd);
+    A2_normals = readPcd(path_next_frame_pcd_normal);
     
     [A1,A1_normals] = preprocessNormals(A1, A1_normals);
-    [A2, ~] = preprocessPointCloud(A2,1);
+    [A2,A2_normals] = preprocessNormals(A2, A2_normals);
+    
     
     [time, errors, R, t] = getICPStatistics(A1, A1_normals, A2);  
     
