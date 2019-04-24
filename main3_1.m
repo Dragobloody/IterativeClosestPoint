@@ -16,7 +16,7 @@ R_previous = eye(3);
 t_previous = zeros(3,1);
 
 for j = [0:step:(99-step)]
-    j 
+    j = 0
     source_file = strcat(path, num2str(j+step, '%010d'), '.pcd');
     source_normals_file = strcat(path, num2str(j+step, '%010d'), '_normal.pcd');
     target_file = strcat(path, num2str(j, '%010d'), '.pcd');
@@ -58,4 +58,4 @@ fscatter3(transformed(1, :), transformed(2, :), transformed(3, :), transformed(3
 figure()
 fscatter3(transformed1(1, :), transformed1(2, :), transformed1(3, :), transformed1(3, :));
 %%
-save('merged_pointclouds/merged_3_1_a.mat', 'merged');
+save('merged_pointclouds/merged_3.1_step10_informative.mat', 'merged','rgb');

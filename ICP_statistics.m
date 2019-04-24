@@ -25,3 +25,20 @@ end
 %%
 save_path = strcat('statistics/statistics_source_target.mat');
 save(save_path, 'time', 'errors', 'R', 't');
+
+%% Test ICP for tolerance to noise
+path_pcd = strcat(path,'0',string(i),'.pcd');
+path_pcd_normal = strcat(path,'0',string(i),'_normal.pcd');
+path_next_frame_pcd = strcat(path,string(i+10),'.pcd');
+    
+A1 = readPcd(path_pcd);
+A1_normals = readPcd(path_pcd_normal);
+A2 = readPcd(path_next_frame_pcd);
+    
+[A1,A1_normals] = preprocessNormals(A1, A1_normals);
+[A2, ~] = preprocessPointCloud(A2,1);
+
+r = normrnd(0,1,[3,size(A2,2)]);
+A2 = A2 + r;
+
+[time, errors, R, t] = getICPStatistics(A1, A1_normals, A2);  

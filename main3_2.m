@@ -14,8 +14,9 @@ source_normals = readPcd(source_normals_file) ;
 merged_source = source_mat;
 merged_source_normals = source_normals_mat;
 merged_rgb = source_rgb;
-step = 1 ;
-for j = [1:step:99]
+step = 3 ;
+uniform_step = 400;
+for j = [step:step:99]
     j
     target_file = strcat(path, num2str(j, '%010d'), '.pcd');
     target_normals_file = strcat(path, num2str(j, '%010d'), '_normal.pcd');
@@ -26,7 +27,8 @@ for j = [1:step:99]
     tic
     [target_mat, target_normals_mat, target_rgb] = preprocessNormals(target, target_normals) ;
     merged_rgb = [merged_rgb, target_rgb];
-    [R, t, error, transformed] = ICP(merged_source, merged_source_normals, target_mat, 'informative', 100, 0) ;    
+    [R, t, error, transformed] = ICP(merged_source, merged_source_normals, target_mat, 'uniform', 100, uniform_step) ;
+    uniform_step = uniform_step + 400;
     
     % The new target will be the merged cloud points, which gives more
     % robustness to the reconstruction
