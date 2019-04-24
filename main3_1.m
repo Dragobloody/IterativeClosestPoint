@@ -8,14 +8,15 @@ source_file = strcat(path, num2str(0, '%010d'), '.pcd');
 source = readPcd(source_file);
 [source_mat, source_rgb] = preprocessPointCloud(source, 1);
 
-step = 2 ; % step is 1 for a) and 2, 4, 10 for b)
+step = 10 ; % step is 1 for a) and 2, 4, 10 for b)
 merged = source_mat ;
+rgb = source_rgb;
 
 R_previous = eye(3);
 t_previous = zeros(3,1);
 
-for j = [0:step:(20-step)]
-    j
+for j = [0:step:(99-step)]
+    j 
     source_file = strcat(path, num2str(j+step, '%010d'), '.pcd');
     source_normals_file = strcat(path, num2str(j+step, '%010d'), '_normal.pcd');
     target_file = strcat(path, num2str(j, '%010d'), '.pcd');
@@ -26,14 +27,15 @@ for j = [0:step:(20-step)]
     target = readPcd(target_file);
     target_normals = readPcd(target_normals_file) ;
     
-    [source_mat, source_normals_mat] = preprocessNormals(source, source_normals) ;
-    [target_mat, target_normals_mat] = preprocessNormals(target, target_normals) ;    
-    [R, t, error, transformed] = ICP(source_mat, source_normals_mat, target_mat, 'informative', 100, 0) ;
+    [source_mat, source_normals_mat, source_rgb] = preprocessNormals(source, source_normals) ;
+    rgb = [rgb, source_rgb];
+    [target_mat, target_normals_mat, ~] = preprocessNormals(target, target_normals) ;    
+    [R, t, error, transformed] = ICP(source_mat, source_normals_mat, target_mat, 'informative', 100,400) ;
     
     % transformed is from source->target, we want to get to the original
     % camera pose:
     transformed = R_previous*transformed + t_previous;
-   
+    transformed = R*source_mat + t;
     merged = [merged transformed] ;
     
     % Keep track of all transf. to get back to the original camera pose

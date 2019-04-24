@@ -9,7 +9,7 @@ function sampleA1 = informativeSampling(A1, A1_normals)
 
      sampleA1 = [];
      % get polaroid coordinates from cardinals
-     [theta,rho,~] = cart2pol(A1_normals(1,:),A1_normals(2,:),A1_normals(3,:));
+     [theta,rho] = cart2pol(A1_normals(1,:),A1_normals(2,:),A1_normals(3,:));
      
      % get histogram of theta values
      polhist = polarhistogram(theta, 36);
